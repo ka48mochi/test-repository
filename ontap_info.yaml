@@ -16,7 +16,7 @@
         validate_certs: false
         use_rest: Always
         fields:
-         - ‘※'
+         - '*'
         gather_subset:
         - storage/volumes
      register: volume_info
