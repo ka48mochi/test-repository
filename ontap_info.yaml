@@ -1,0 +1,26 @@
+---
+- name: ONTAP Info
+  hosts: Ansible
+  collections: netapp.ontap
+  gather_facts: no
+  become: no
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: run ONTAP gather facts for vserver info
+      na_ontap_rest_info:
+        hostname: "{{ svm_host }}"
+        username: "{{ svm_user }}"
+        password: "{{ svm_password }}"
+        https: true
+        validate_certs: false
+        use_rest: Always
+        fields:
+         - ‘※'
+        gather_subset:
+        - storage/volumes
+     register: volume_info
+
+- name: Display Volume Information
+     debug:
+        msg: "{{ volume_info.ontap_info['storage/volumes'].records | list }}"
